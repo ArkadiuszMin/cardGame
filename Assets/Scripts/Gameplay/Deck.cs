@@ -1,0 +1,55 @@
+using System.Collections.Generic;
+using Data;
+using UnityEngine;
+using Extensions;
+using System;
+using Interface;
+
+namespace Gameplay
+{
+    public class Deck : MonoBehaviour, ICardHandler
+    {
+        private List<Card> _cards = new List<Card>();
+        private Player _owner;
+        public void Initialize(Player owner, StartingDeckData startingDeckData)
+        {
+            _owner = owner;
+            foreach (var card in startingDeckData.GetCards())
+            {
+                CreateCard(card);
+            }
+
+            Shuffle();
+        }
+        
+        private void CreateCard(CardData cardData)
+        {
+            var card = cardData.Create();
+            card.SetOwner(_owner);
+            card.SetStatus(CardStatus.InDeck, this);
+            _cards.Add(card);
+        }
+
+        private void Shuffle()
+        {
+            _cards.Shuffle();
+        }
+
+        public Vector3 GetPosition(Card card)
+        {
+            return Vector3.zero;
+        }
+
+        public Transform GetTransform()
+        {
+            return transform;
+        }
+
+        public Card DrawCard()
+        {
+            var card = _cards[0];
+            _cards.RemoveAt(0);
+            return card;
+        }
+    }
+}
