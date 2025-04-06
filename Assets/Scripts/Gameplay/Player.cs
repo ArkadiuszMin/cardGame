@@ -22,6 +22,10 @@ namespace Gameplay
         {
             deck.Initialize(this, startingDeckData);
             hand.Initialize(this);
+
+            _xp = 0;
+            _maximumMana = 1;
+            _mana = _maximumMana;
         }
 
         public void DrawCard()
@@ -32,13 +36,13 @@ namespace Gameplay
 
         public int GetLevel(int xp)
         {
-            var levels = new[] { 3, 7, 12, 18 };
+            var levels = new[] { 0, 3, 4, 5, 6 };
             for (int i = 0; i < levels.Length; i++)
             {
                 xp -= levels[i];
-                if (xp <= 0)
+                if (xp < 0)
                 {
-                    return i;
+                    return i - 1;
                 }
             }
 

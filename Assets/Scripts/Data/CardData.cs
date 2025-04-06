@@ -9,8 +9,8 @@ namespace Data
         public string cardName;
         public Sprite cardSprite;
         private Card _cardPrefab;
-
         public int manaCost;
+        public int level;
         public CardType CardType;
         public int attack;
         public int maxHealth;
