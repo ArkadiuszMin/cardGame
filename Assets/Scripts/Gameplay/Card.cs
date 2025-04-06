@@ -1,12 +1,16 @@
 using Data;
 using DG.Tweening;
 using Interface;
+using UnityEngine.UI;
+using TMPro;
 using UnityEngine;
 
 namespace Gameplay
 {
     public class Card : MonoBehaviour
     {
+        public TMP_Text cardNameText;
+        public Image cardSpriteImage;
         private CardData _cardData;
         private Player _owner;
         private CardStatus _status;
@@ -15,6 +19,8 @@ namespace Gameplay
         public void SetData(CardData data)
         {
             _cardData = data;
+            cardNameText.text = data.cardName;
+            cardSpriteImage.sprite = data.cardSprite;
         }
 
         public void SetOwner(Player owner)
