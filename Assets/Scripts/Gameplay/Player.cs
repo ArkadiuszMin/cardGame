@@ -8,24 +8,54 @@ namespace Gameplay
     public class Player : MonoBehaviour
     {
         public StartingDeckData startingDeckData;
-        [SerializeField]
-        private Hand hand;
-        [SerializeField]
-        private Deck deck;
+        
+        [SerializeField] private Hand hand;
+        [SerializeField] private Deck deck;
+
+        public event Action<int, int> ManaChanged;
+        public event Action<int, int, int> XpChanged;
 
         private int _xp;
 
+        public int Xp
+        {
+            get => _xp;
+            set
+            {
+                _xp = value;
+                XpChanged?.Invoke(GetLevel(_xp), _xp, _xp);
+            }
+        }
+
         private int _mana;
+        public int Mana
+        {
+            get => _mana;
+            set
+            {
+                _mana = value;
+                ManaChanged?.Invoke(_mana, _maximumMana);
+            }
+        }
         private int _maximumMana;
+        public int MaximumMana
+        {
+            get => _maximumMana;
+            set
+            {
+                _maximumMana = value;
+                ManaChanged?.Invoke(_mana, _maximumMana);
+            }
+        }
 
         public void Initialize()
         {
             deck.Initialize(this, startingDeckData);
             hand.Initialize(this);
 
-            _xp = 0;
-            _maximumMana = 1;
-            _mana = _maximumMana;
+            Xp = 0;
+            MaximumMana = 1;
+            Mana = _maximumMana;
         }
 
         public void DrawCard()

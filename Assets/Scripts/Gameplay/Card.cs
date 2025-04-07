@@ -11,6 +11,7 @@ namespace Gameplay
     {
         public TMP_Text cardNameText;
         public Image cardSpriteImage;
+        public GameObject cardBack;
         private CardData _cardData;
         private Player _owner;
         private CardStatus _status;
@@ -33,6 +34,9 @@ namespace Gameplay
         {
             _cardHandler = parent;
             _status = status;
+
+            cardBack.SetActive(_status == CardStatus.InDeck);
+
             transform.SetParent(_cardHandler.GetTransform());
 
             UpdatePosition();
