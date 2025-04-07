@@ -18,13 +18,17 @@ namespace Gameplay
 
         public void AddCard(Card card)
         {
-           card.SetStatus(CardStatus.InHand, this);
-           _cards.Add(card);
+            card.SetStatus(CardStatus.InHand, this);
+            _cards.Add(card);
+            UpdateHandPosition();
+        }
 
-           foreach (var c in _cards)
-           {
-               c.UpdatePosition();
-           }
+        private void UpdateHandPosition()
+        {
+            foreach (var c in _cards)
+            {
+                c.UpdatePosition();
+            }
         }
 
         public Vector3 GetPosition(Card card)
@@ -41,6 +45,12 @@ namespace Gameplay
         public Transform GetTransform()
         {
             return transform;
+        }
+
+        public void RemoveCard(Card card)
+        {
+            _cards.Remove(card);
+            UpdateHandPosition();
         }
     }
 }

@@ -47,9 +47,14 @@ namespace Gameplay
 
         public Card DrawCard()
         {
-            var card = _cards[0];
-            _cards.RemoveAt(0);
-            return card;
+            if (_cards.Count >0)
+            {
+                var card = _cards[0];
+                _cards.RemoveAt(0);
+                return card;
+            }
+
+            return null;
         }
     }
 }

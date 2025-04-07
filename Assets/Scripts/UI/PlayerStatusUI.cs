@@ -8,16 +8,20 @@ namespace UI
 {
     public class PlayerStatusUI : MonoBehaviour
     {
+        public Player player;
         public TMP_Text manaText;
         public TMP_Text xpText;
         public TMP_Text levelText;
         public Image xpFillImage;
 
-        private Player _player;
+        public void OnEnable(){
+            player.ManaChanged += UpdateManaText;
+            player.XpChanged += UpdateLevel;
+        }
 
-        public void LinkToPlayer(Player _player){
-            _player.ManaChanged += UpdateManaText;
-            _player.XpChanged += UpdateLevel;
+        public void OnDisable(){
+            player.ManaChanged -= UpdateManaText;
+            player.XpChanged -= UpdateLevel;
         }
         private void UpdateManaText(int mana, int maxMana)
         {
@@ -27,7 +31,13 @@ namespace UI
         {
             levelText.text = $"Level: {level + 1}";
             xpText.text = $"{xp}/{nextLevelXp}";
-            var percent = (float)xp / nextLevelXp;
+            var percent = 0f;
+
+            if (nextLevelXp != 0)
+                percent = (float)xp / nextLevelXp;
+            else
+                percent = (float)xp;
+                
             xpFillImage.DOKill();
             xpFillImage.DOFillAmount(percent, 0.4f);
         }

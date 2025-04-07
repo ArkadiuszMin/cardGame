@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a110e049427949328c7fa63326f7be1, type: 3}
   m_Name: TestCard
   m_EditorClassIdentifier: 
-  cardName: 
+  cardName: Soldier
   cardSprite: {fileID: 21300000, guid: c0a9d0158edac41b99127fdb9764aebe, type: 3}
   manaCost: 0
   level: 0

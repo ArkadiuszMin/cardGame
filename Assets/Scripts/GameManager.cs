@@ -26,12 +26,4 @@ public class GameManager : MonoBehaviour
     private void InitializeBoard(){
         board.Initilize();
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            players[0].DrawCard();
-        }
-    }
 }
