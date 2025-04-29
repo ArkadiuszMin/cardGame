@@ -11,6 +11,14 @@ namespace Gameplay
     public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         public TMP_Text cardNameText;
+        public TMP_Text CardAttackText;
+        public TMP_Text CardManaText;
+        public TMP_Text CardHealthText;
+
+        public GameObject attack;
+        public GameObject mana;
+        public GameObject health;
+        
         public Image cardSpriteImage;
         public GameObject cardBack;
         public Image cardBackground;
@@ -30,6 +38,9 @@ namespace Gameplay
         {
             _cardData = data;
             cardNameText.text = data.cardName;
+            CardAttackText.text = data.attack.ToString();
+            CardManaText.text = data.manaCost.ToString();
+            CardHealthText.text = data.maxHealth.ToString();
             cardSpriteImage.sprite = data.cardSprite;
         }
 
@@ -45,6 +56,9 @@ namespace Gameplay
             _status = status;
 
             cardBack.SetActive(_status == CardStatus.InDeck);
+            attack.SetActive(_status == CardStatus.InHand);
+            mana.SetActive(_status == CardStatus.InHand);
+            health.SetActive(_status == CardStatus.InHand);
 
             transform.DOComplete();
             transform.localScale = Vector3.one * 0.01f;
