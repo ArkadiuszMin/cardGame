@@ -49,6 +49,7 @@ namespace Gameplay
 
         public void OnPointerClick(PointerEventData eventData)
         {
+            Debug.Log("card played");
             _owner.PlaySelectedCard();
         }
     }

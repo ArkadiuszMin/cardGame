@@ -12,6 +12,7 @@ namespace Gameplay
         [SerializeField] private Hand hand;
         [SerializeField] private Deck deck;
         [SerializeField] private Board board;
+        public PlayerStatus PlayerStatus { get; private set; }
 
         public event Action<int, int> ManaChanged;
         public event Action<int, int, int> XpChanged;
@@ -52,7 +53,7 @@ namespace Gameplay
         private Card _highlightedCard;
         private Card _selectedCard;
 
-        public void Initialize()
+        public void Initialize(PlayerStatus playerStatus)
         {
             deck.Initialize(this, startingDeckData);
             hand.Initialize(this);

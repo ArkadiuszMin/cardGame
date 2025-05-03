@@ -11,13 +11,9 @@ namespace Gameplay
     public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         public TMP_Text cardNameText;
-        public TMP_Text CardAttackText;
-        public TMP_Text CardManaText;
-        public TMP_Text CardHealthText;
-
-        public GameObject attack;
-        public GameObject mana;
-        public GameObject health;
+        public CardField CardAttackText;
+        public CardField CardManaText;
+        public CardField CardHealthText;
         
         public Image cardSpriteImage;
         public GameObject cardBack;
@@ -38,9 +34,9 @@ namespace Gameplay
         {
             _cardData = data;
             cardNameText.text = data.cardName;
-            CardAttackText.text = data.attack.ToString();
-            CardManaText.text = data.manaCost.ToString();
-            CardHealthText.text = data.maxHealth.ToString();
+            CardAttackText.Initialize(data.attack);
+            CardManaText.Initialize(data.manaCost);
+            CardHealthText.Initialize(data.maxHealth);
             cardSpriteImage.sprite = data.cardSprite;
         }
 
@@ -54,12 +50,7 @@ namespace Gameplay
         {
             _cardHandler = parent;
             _status = status;
-
-            cardBack.SetActive(_status == CardStatus.InDeck);
-            attack.SetActive(_status == CardStatus.InHand);
-            mana.SetActive(_status == CardStatus.InHand);
-            health.SetActive(_status == CardStatus.InHand);
-
+            
             transform.DOComplete();
             transform.localScale = Vector3.one * 0.01f;
             transform.SetParent(_cardHandler.GetTransform());
@@ -91,19 +82,16 @@ namespace Gameplay
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            Debug.Log("Pointer Enter");
             _owner.Highlight(this);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            Debug.Log("Pointer Exit");
             _owner.Unhighlight();
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            Debug.Log("Click");
             _owner.Select(this);
         }
 
@@ -113,6 +101,14 @@ namespace Gameplay
 
         public void Unselect(){
             cardBackground.color = _deafultBackgroundColor;
+        }
+
+        public void SetVisibility(bool isVisible)
+        {
+            CardAttackText.UpdateDisplay(isVisible);
+            CardManaText.UpdateDisplay(isVisible);
+            CardHealthText.UpdateDisplay(isVisible);
+            cardBack.SetActive(!isVisible);
         }
     }
 

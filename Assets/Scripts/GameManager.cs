@@ -4,7 +4,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public Player[] players;
+    public Player player;
+    public Player opponent;
     public GameBoard board;
 
     private void Awake()
@@ -18,12 +19,17 @@ public class GameManager : MonoBehaviour
         InitializeBoard();
     }
     private void InitializePlayers(){
-        foreach (var player in players)
-        {
-            player.Initialize();
-        }
+        player.Initialize(PlayerStatus.Me);
+        opponent.Initialize(PlayerStatus.Opponent);
     }
     private void InitializeBoard(){
         board.Initilize();
     }
+
+    
+}
+
+public enum PlayerStatus
+{
+    Me, Opponent
 }

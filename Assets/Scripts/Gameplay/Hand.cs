@@ -18,7 +18,11 @@ namespace Gameplay
 
         public void AddCard(Card card)
         {
-            card.SetStatus(CardStatus.InHand, this);
+            var cardStatus = CardStatus.InHand;
+            card.SetStatus(cardStatus, this);
+            var cardVisibility = CardVisibilityService.GetCardVisibility(cardStatus, _owner.PlayerStatus);
+            card.SetVisibility(cardVisibility);
+            
             _cards.Add(card);
             UpdateHandPosition();
         }
