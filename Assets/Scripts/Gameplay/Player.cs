@@ -89,7 +89,7 @@ namespace Gameplay
 
         public void PlaySelectedCard(){
             if (_selectedCard && !_selectedCard.isOnBoard()){
-                Unhighlight();
+                // Unhighlight();
                 PlayCard(_selectedCard);
                 Select(null);
             }
@@ -114,20 +114,20 @@ namespace Gameplay
 
             return 0;
         }
-
-        public void Highlight(Card card)
-        {
-            if(_highlightedCard)
-                _highlightedCard.Unhighlight();
-            _highlightedCard = card;
-            if(_highlightedCard)
-                _highlightedCard.Highlight();
-        }
-        public void Unhighlight()
-        {
-            Highlight(null);
-        }
-
+        
+        // public void Highlight(Card card)
+        // {
+        //     if(_highlightedCard)
+        //         _highlightedCard.Unhighlight();
+        //     _highlightedCard = card;
+        //     if(_highlightedCard)
+        //         _highlightedCard.Highlight();
+        // }
+        // public void Unhighlight()
+        // {
+        //     Highlight(null);
+        // }
+        
         public void Select(Card card)
         {
             if(_selectedCard)

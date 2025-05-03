@@ -27,7 +27,7 @@ namespace Gameplay
         {
             var card = cardData.Create();
             card.SetOwner(_owner);
-            card.SetStatus(CardStatus.InDeck, this);
+            CardStatusChanger.Change(card, CardStatus.InDeck, this);
             _cards.Add(card);
         }
 

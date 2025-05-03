@@ -46,6 +46,11 @@ namespace Gameplay.Cards
             transform.SetParent(_owner.transform);
         }
 
+        public PlayerStatus GetOwnerStatus()
+        {
+            return _owner.PlayerStatus;
+        }
+
         public void SetStatus(CardStatus status, ICardHandler parent)
         {
             _cardHandler = parent;
@@ -83,13 +88,12 @@ namespace Gameplay.Cards
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            Debug.Log("entered");
-            _owner.Highlight(this);
+            Highlight();
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            _owner.Unhighlight();
+            Unhighlight();
         }
 
         public void OnPointerClick(PointerEventData eventData)

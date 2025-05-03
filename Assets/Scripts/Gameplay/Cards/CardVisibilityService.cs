@@ -25,7 +25,7 @@ namespace Gameplay.Cards
 
         private static bool GetVisibilityForOpponent(CardStatus status)
         {
-            var visibleStatues = new [] {CardStatus.InGame};
+            var visibleStatues = new [] {CardStatus.InHand, CardStatus.InGame};
 
             return visibleStatues.Contains(status);
         }

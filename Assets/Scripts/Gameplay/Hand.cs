@@ -19,7 +19,7 @@ namespace Gameplay
 
         public void AddCard(Card card)
         {
-            CardStatusChanger.Change(card, CardStatus.InHand, _owner.PlayerStatus, this);
+            CardStatusChanger.Change(card, CardStatus.InHand, this);
             _cards.Add(card);
             UpdateHandPosition();
         }
