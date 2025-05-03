@@ -86,7 +86,7 @@ namespace Gameplay
         }
 
         public void PlaySelectedCard(){
-            if (_selectedCard){
+            if (_selectedCard && !_selectedCard.isOnBoard()){
                 Unhighlight();
                 PlayCard(_selectedCard);
                 Select(null);
