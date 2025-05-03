@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Soldier
   cardSprite: {fileID: 21300000, guid: c0a9d0158edac41b99127fdb9764aebe, type: 3}
-  manaCost: 0
+  manaCost: 1
   level: 0
   CardType: 0
-  attack: 0
-  maxHealth: 0
+  attack: 1
+  maxHealth: 2

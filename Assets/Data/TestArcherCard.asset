@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Archer
   cardSprite: {fileID: 21300000, guid: 522c975764f3f480f976f640401a70c4, type: 3}
-  manaCost: 0
+  manaCost: 2
   level: 0
   CardType: 0
-  attack: 0
-  maxHealth: 0
+  attack: 3
+  maxHealth: 2

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Wizard
   cardSprite: {fileID: 21300000, guid: e4a506e18cfaf4805a67a8368033c11c, type: 3}
-  manaCost: 0
+  manaCost: 3
   level: 0
   CardType: 0
-  attack: 0
-  maxHealth: 0
+  attack: 3
+  maxHealth: 4
