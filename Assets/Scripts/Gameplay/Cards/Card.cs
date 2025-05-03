@@ -112,6 +112,11 @@ namespace Gameplay.Cards
             CardHealthText.UpdateDisplay(isVisible);
             cardBack.SetActive(!isVisible);
         }
+
+        public bool isOnBoard()
+        {
+            return _status == CardStatus.InGame;
+        }
     }
 
     public enum CardStatus
