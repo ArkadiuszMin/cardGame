@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Gameplay.Cards;
 using Interface;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -19,7 +20,7 @@ namespace Gameplay
 
         public void AddCard(Card card){
             _cards.Add(card);
-            card.SetStatus(CardStatus.InGame, this);
+            CardStatusChanger.Change(card, CardStatus.InGame, _owner.PlayerStatus, this);
             UpdateBoardPosition();
         }
 
@@ -49,7 +50,6 @@ namespace Gameplay
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            Debug.Log("card played");
             _owner.PlaySelectedCard();
         }
     }

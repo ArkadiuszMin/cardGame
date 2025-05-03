@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Gameplay.Cards;
 using Interface;
 using UnityEngine;
 
@@ -18,11 +19,7 @@ namespace Gameplay
 
         public void AddCard(Card card)
         {
-            var cardStatus = CardStatus.InHand;
-            card.SetStatus(cardStatus, this);
-            var cardVisibility = CardVisibilityService.GetCardVisibility(cardStatus, _owner.PlayerStatus);
-            card.SetVisibility(cardVisibility);
-            
+            CardStatusChanger.Change(card, CardStatus.InHand, _owner.PlayerStatus, this);
             _cards.Add(card);
             UpdateHandPosition();
         }

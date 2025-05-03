@@ -1,12 +1,12 @@
 using Data;
 using DG.Tweening;
 using Interface;
-using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-namespace Gameplay
+namespace Gameplay.Cards
 {
     public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
@@ -65,6 +65,7 @@ namespace Gameplay
         }
 
         public void Highlight(){
+            Debug.Log(_status.ToString());
             if (_status != CardStatus.InHand) return;
 
             transform.DOScale(Vector3.one * 0.01f * 2f, 0.4f);
@@ -82,6 +83,7 @@ namespace Gameplay
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            Debug.Log("entered");
             _owner.Highlight(this);
         }
 

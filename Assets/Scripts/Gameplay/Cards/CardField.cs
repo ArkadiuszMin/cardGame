@@ -1,7 +1,8 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-namespace Gameplay
+namespace Gameplay.Cards
 {
     public class CardField : MonoBehaviour
     {

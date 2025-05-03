@@ -1,5 +1,6 @@
 using System;
 using Data;
+using Gameplay.Cards;
 using UnityEngine;
 
 namespace Gameplay
@@ -59,6 +60,7 @@ namespace Gameplay
             hand.Initialize(this);
             board.Initialize(this);
 
+            PlayerStatus = playerStatus;
             Xp = 0;
             MaximumMana = 1;
             Mana = _maximumMana;

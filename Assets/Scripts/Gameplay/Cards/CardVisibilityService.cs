@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Linq;
+using UnityEngine;
 
-namespace Gameplay
+namespace Gameplay.Cards
 {
     public static class CardVisibilityService
     {
