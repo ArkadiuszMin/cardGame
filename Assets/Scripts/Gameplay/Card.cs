@@ -111,9 +111,9 @@ namespace Gameplay
             cardBack.SetActive(!isVisible);
         }
 
-        public bool isOnBoard()
+        public bool isInHand()
         {
-            return _status == CardStatus.InGame;
+            return _status == CardStatus.InHand;
         }
     }
 
