@@ -133,12 +133,10 @@ namespace Gameplay
             if(_selectedCard)
                 _selectedCard.Unselect();
             _selectedCard = card;
-            if(_selectedCard)
-                _selectedCard.Select();
         }
-        public void Unselect(Card card)
+        public void Unselect()
         {
+            _selectedCard = null;
         }
-        
     }
 }

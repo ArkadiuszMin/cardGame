@@ -1,5 +1,6 @@
 using Data;
 using DG.Tweening;
+using Event;
 using Interface;
 using TMPro;
 using UnityEngine;
@@ -20,7 +21,7 @@ namespace Gameplay.Cards
         public Image cardBackground;
         private CardData _cardData;
         private Player _owner;
-        private CardStatus _status;
+        [HideInInspector] public CardStatus Status { get;  private set; }
         private Canvas _canvas;
         private Color _deafultBackgroundColor;
         private void Awake()
@@ -54,7 +55,7 @@ namespace Gameplay.Cards
         public void SetStatus(CardStatus status, ICardHandler parent)
         {
             _cardHandler = parent;
-            _status = status;
+            Status = status;
             
             transform.DOComplete();
             transform.localScale = Vector3.one * 0.01f;
@@ -70,8 +71,7 @@ namespace Gameplay.Cards
         }
 
         public void Highlight(){
-            Debug.Log(_status.ToString());
-            if (_status != CardStatus.InHand) return;
+            if (Status != CardStatus.InHand) return;
 
             transform.DOScale(Vector3.one * 0.01f * 2f, 0.4f);
             transform.DOLocalMoveZ(1.2f, 0.4f);
@@ -79,7 +79,7 @@ namespace Gameplay.Cards
         }
 
         public void Unhighlight(){
-            if (_status != CardStatus.InHand) return;
+            if (Status != CardStatus.InHand) return;
 
             transform.DOScale(Vector3.one * 0.01f, 0.4f);
             transform.DOLocalMoveZ(0f, 0.4f);
@@ -98,14 +98,16 @@ namespace Gameplay.Cards
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            _owner.Select(this);
+            GameEvents.CardEvents.cardClicked?.Invoke(this);
         }
 
         public void Select(){
+            _owner.Select(this);
             cardBackground.color = Color.yellow;
         }
 
         public void Unselect(){
+            _owner.Unselect();
             cardBackground.color = _deafultBackgroundColor;
         }
 
@@ -119,7 +121,7 @@ namespace Gameplay.Cards
 
         public bool isInHand()
         {
-            return _status == CardStatus.InHand;
+            return Status == CardStatus.InHand;
         }
     }
 
