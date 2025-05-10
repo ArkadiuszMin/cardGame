@@ -24,6 +24,9 @@ namespace Gameplay.Cards
         [HideInInspector] public CardStatus Status { get;  private set; }
         private Canvas _canvas;
         private Color _deafultBackgroundColor;
+
+        private int _health;
+        private int _attack;
         private void Awake()
         {
             _canvas = GetComponent<Canvas>();
@@ -35,6 +38,9 @@ namespace Gameplay.Cards
         {
             _cardData = data;
             cardNameText.text = data.cardName;
+            _health = data.maxHealth;
+            _attack = data.attack;
+            
             CardAttackText.Initialize(data.attack);
             CardManaText.Initialize(data.manaCost);
             CardHealthText.Initialize(data.maxHealth);
@@ -102,6 +108,7 @@ namespace Gameplay.Cards
         }
 
         public void Select(){
+            CardHealthText.ChangeValue(_health-1);
             _owner.Select(this);
             cardBackground.color = Color.yellow;
         }

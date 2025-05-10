@@ -25,8 +25,6 @@ public class GameManager : MonoBehaviour
     private void InitializeBoard(){
         board.Initilize();
     }
-
-    
 }
 
 public enum PlayerStatus
