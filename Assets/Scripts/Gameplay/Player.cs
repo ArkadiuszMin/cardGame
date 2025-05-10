@@ -1,5 +1,6 @@
 using System;
 using Data;
+using Event;
 using Gameplay.Cards;
 using UnityEngine;
 
@@ -98,6 +99,7 @@ namespace Gameplay
         private void PlayCard(Card card){
             hand.RemoveCard(card);
             board.AddCard(card);
+            GameEvents.CardEvents.cardPlayed.Invoke(card);
         }
 
         public int GetLevel(int xp)

@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using Data;
 using DG.Tweening;
 using Event;
@@ -26,7 +28,7 @@ namespace Gameplay.Cards
         private Color _deafultBackgroundColor;
 
         private int _health;
-        private int _attack;
+        public int _attack;
         private void Awake()
         {
             _canvas = GetComponent<Canvas>();
@@ -108,7 +110,6 @@ namespace Gameplay.Cards
         }
 
         public void Select(){
-            CardHealthText.ChangeValue(_health-1);
             _owner.Select(this);
             cardBackground.color = Color.yellow;
         }
@@ -126,9 +127,39 @@ namespace Gameplay.Cards
             cardBack.SetActive(!isVisible);
         }
 
+        public void TakeDamage(int dmg)
+        {
+            _health -= dmg;
+            CardHealthText.ChangeValue(_health);
+        }
+
         public bool isInHand()
         {
             return Status == CardStatus.InHand;
+        }
+        
+        public IEnumerator AnimateAttack(Vector3 targetPosition, float duration)
+        {
+            Vector3 originalPosition = transform.position;
+
+            float elapsed = 0;
+            while (elapsed < duration / 2f)
+            {
+                transform.position = Vector3.Lerp(originalPosition, targetPosition, elapsed / (duration / 2f));
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            transform.position = targetPosition;
+            yield return new WaitForSeconds(0.1f);
+
+            elapsed = 0;
+            while (elapsed < duration / 2f)
+            {
+                transform.position = Vector3.Lerp(targetPosition, originalPosition, elapsed / (duration / 2f));
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            transform.position = originalPosition;
         }
     }
 

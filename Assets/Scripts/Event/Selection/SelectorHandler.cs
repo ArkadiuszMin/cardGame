@@ -1,5 +1,6 @@
 ﻿using System;
 using Event;
+using Event.Selection.Animation;
 using Gameplay.Cards;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -7,8 +8,6 @@ using UnityEngine;
 public class SelectorHandler : MonoBehaviour
 { 
     [CanBeNull] public static SelectorHandler Instance { get; private set; }
-    
-    public Action<Card> OnSelect;
     [CanBeNull] private Card _selectedCard;
 
     private void HandleSelect(Card card)
@@ -25,7 +24,7 @@ public class SelectorHandler : MonoBehaviour
         }
         else if(AreBothCardsAreOnBoard(card, _selectedCard) && AreDifferentPlayersCard(card, _selectedCard))
         {
-            Debug.Log("fight");
+            StartCoroutine(AttackAnimation.Execute(_selectedCard, card));
         }
         else
         {
