@@ -8,7 +8,8 @@ namespace Event
         public static class CardEvents
         {
             public static Action<Card> cardClicked;
-            public static Action<Card> cardPlayed;    
+            public static Action<Card> cardPlayed;
+            public static Action<Card> cardDied;
         }
     }
 }

@@ -24,6 +24,11 @@ namespace Gameplay
             UpdateBoardPosition();
         }
 
+        public void RemoveCard(Card card)
+        {
+            _cards.Remove(card);
+        }
+        
         private void UpdateBoardPosition()
         {
             foreach (var c in _cards)

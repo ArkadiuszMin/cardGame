@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Data;
@@ -27,11 +28,14 @@ namespace Gameplay.Cards
         private Canvas _canvas;
         private Color _deafultBackgroundColor;
 
+        private List<Action> ActionQueue;
+
         private int _health;
         public int _attack;
         private void Awake()
         {
             _canvas = GetComponent<Canvas>();
+            ActionQueue = new List<Action>();
             _deafultBackgroundColor = cardBackground.color;
         }
 
@@ -119,47 +123,38 @@ namespace Gameplay.Cards
             cardBackground.color = _deafultBackgroundColor;
         }
 
-        public void SetVisibility(bool isVisible)
+        public void SetVisibility(CardVisibility visibility)
         {
-            CardAttackText.UpdateDisplay(isVisible);
-            CardManaText.UpdateDisplay(isVisible);
-            CardHealthText.UpdateDisplay(isVisible);
-            cardBack.SetActive(!isVisible);
+            CardAttackText.UpdateDisplay(visibility.AreStatsVisible);
+            CardManaText.UpdateDisplay(visibility.AreStatsVisible);
+            CardHealthText.UpdateDisplay(visibility.AreStatsVisible);
+            cardBack.SetActive(!visibility.IsCardVisible);
         }
 
         public void TakeDamage(int dmg)
         {
             _health -= dmg;
             CardHealthText.ChangeValue(_health);
+
+            if (_health <= 0)
+            {
+                ActionQueue.Add(() => _owner.PutOnGraveyard(this));
+            }
+        }
+
+        public void ExecuteActions()
+        {
+            foreach (var action in ActionQueue)
+            {
+                action.Invoke();
+            }
+            
+            ActionQueue.Clear();
         }
 
         public bool isInHand()
         {
             return Status == CardStatus.InHand;
-        }
-        
-        public IEnumerator AnimateAttack(Vector3 targetPosition, float duration)
-        {
-            Vector3 originalPosition = transform.position;
-
-            float elapsed = 0;
-            while (elapsed < duration / 2f)
-            {
-                transform.position = Vector3.Lerp(originalPosition, targetPosition, elapsed / (duration / 2f));
-                elapsed += Time.deltaTime;
-                yield return null;
-            }
-            transform.position = targetPosition;
-            yield return new WaitForSeconds(0.1f);
-
-            elapsed = 0;
-            while (elapsed < duration / 2f)
-            {
-                transform.position = Vector3.Lerp(targetPosition, originalPosition, elapsed / (duration / 2f));
-                elapsed += Time.deltaTime;
-                yield return null;
-            }
-            transform.position = originalPosition;
         }
     }
 

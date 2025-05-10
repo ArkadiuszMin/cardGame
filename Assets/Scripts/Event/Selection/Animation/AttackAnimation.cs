@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Gameplay.Cards;
 using UnityEngine;
 
@@ -15,28 +16,18 @@ namespace Event.Selection.Animation
         {
             Vector3 targetPosition = target.transform.position;
             Vector3 originalPosition = attacker.transform.position;
-
-            float elapsed = 0;
-            while (elapsed < duration / 2f)
-            {
-                attacker.transform.position = Vector3.Lerp(originalPosition, targetPosition, elapsed / (duration / 2f));
-                elapsed += Time.deltaTime;
-                yield return null;
-            }
-            attacker.transform.position = targetPosition;
-            yield return new WaitForSeconds(0.1f);
             
+            yield return AnimationHelper.MoveToPosition(attacker.transform, targetPosition, duration/2);
+            
+            yield return new WaitForSeconds(0.1f);
+
             attacker.TakeDamage(target._attack);
             target.TakeDamage(attacker._attack);
 
-            elapsed = 0;
-            while (elapsed < duration / 2f)
-            {
-                attacker.transform.position = Vector3.Lerp(targetPosition, originalPosition, elapsed / (duration / 2f));
-                elapsed += Time.deltaTime;
-                yield return null;
-            }
-            attacker.transform.position = originalPosition;
+            yield return AnimationHelper.MoveToPosition(attacker.transform, originalPosition, duration/2);
+            
+            attacker.ExecuteActions();
+            target.ExecuteActions();
         }
     }
 }

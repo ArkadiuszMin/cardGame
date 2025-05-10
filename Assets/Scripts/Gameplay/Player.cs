@@ -1,5 +1,6 @@
 using System;
 using Data;
+using DG.Tweening;
 using Event;
 using Gameplay.Cards;
 using UnityEngine;
@@ -14,6 +15,8 @@ namespace Gameplay
         [SerializeField] private Hand hand;
         [SerializeField] private Deck deck;
         [SerializeField] private Board board;
+        [SerializeField] private Graveyard graveyard;
+        
         public PlayerStatus PlayerStatus { get; private set; }
 
         public event Action<int, int> ManaChanged;
@@ -60,6 +63,7 @@ namespace Gameplay
             deck.Initialize(this, startingDeckData);
             hand.Initialize(this);
             board.Initialize(this);
+            graveyard.Initialize(this);
 
             PlayerStatus = playerStatus;
             Xp = 0;
@@ -139,6 +143,12 @@ namespace Gameplay
         public void Unselect()
         {
             _selectedCard = null;
+        }
+
+        public void PutOnGraveyard(Card card)
+        {
+            board.RemoveCard(card);
+            graveyard.AddCard(card);
         }
     }
 }
