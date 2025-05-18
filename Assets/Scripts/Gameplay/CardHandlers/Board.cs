@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Event;
 using Gameplay.Cards;
 using Interface;
 using UnityEngine;
@@ -16,6 +17,7 @@ namespace Gameplay
         public void Initialize(Player owner)
         {
             _owner = owner;
+            GameEvents.CardEvents.cardDied += card => UpdateBoardPosition();
         }
 
         public void AddCard(Card card){

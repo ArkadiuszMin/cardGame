@@ -12,6 +12,26 @@ public class SelectorHandler : MonoBehaviour
 
     private void HandleSelect(Card card)
     {
+        if (AreBothCardsAreOnBoard(card, _selectedCard) && AreDifferentPlayersCard(card, _selectedCard))
+        {
+            _selectedCard.Unselect();
+            StartCoroutine(AttackAnimation.Execute(_selectedCard, card));
+            _selectedCard = null;
+        }
+        else
+        {
+            HandleCardSelection(card);
+        }
+        
+    }
+
+    private void HandleCardSelection(Card card)
+    {
+        if (!card.CanBeSelected())
+        {
+            return;
+        }
+        
         if (_selectedCard == null)
         {
             _selectedCard = card;
@@ -21,10 +41,6 @@ public class SelectorHandler : MonoBehaviour
         {
             _selectedCard.Unselect();
             _selectedCard = null;
-        }
-        else if(AreBothCardsAreOnBoard(card, _selectedCard) && AreDifferentPlayersCard(card, _selectedCard))
-        {
-            StartCoroutine(AttackAnimation.Execute(_selectedCard, card));
         }
         else
         {
@@ -36,12 +52,12 @@ public class SelectorHandler : MonoBehaviour
 
     private bool AreBothCardsAreOnBoard(Card card1, Card card2)
     {
-        return card1.Status == CardStatus.InGame && card2.Status == CardStatus.InGame;
+        return card1.Status == CardStatus.InGame && card2?.Status == CardStatus.InGame;
     }
 
     private bool AreDifferentPlayersCard(Card card1, Card card2)
     {
-        return card1.GetOwnerStatus() != card2.GetOwnerStatus();
+        return card1.GetOwnerStatus() != card2?.GetOwnerStatus();
     }
     
     private void Awake()

@@ -149,6 +149,7 @@ namespace Gameplay
         {
             board.RemoveCard(card);
             graveyard.AddCard(card);
+            GameEvents.CardEvents.cardDied.Invoke(card);
         }
     }
 }

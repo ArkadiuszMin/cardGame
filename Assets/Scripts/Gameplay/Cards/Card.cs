@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Data;
 using DG.Tweening;
 using Event;
@@ -155,6 +156,12 @@ namespace Gameplay.Cards
         public bool isInHand()
         {
             return Status == CardStatus.InHand;
+        }
+
+        public bool CanBeSelected()
+        {
+            var selectableStatuses = new [] { CardStatus.InHand, CardStatus.InGame };
+            return selectableStatuses.Contains(Status);
         }
     }
 
