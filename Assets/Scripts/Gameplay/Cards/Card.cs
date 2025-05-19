@@ -33,6 +33,10 @@ namespace Gameplay.Cards
 
         private int _health;
         public int _attack;
+        public int ManaCost;
+
+        public bool HasAttacked = false;
+        
         private void Awake()
         {
             _canvas = GetComponent<Canvas>();
@@ -47,6 +51,7 @@ namespace Gameplay.Cards
             cardNameText.text = data.cardName;
             _health = data.maxHealth;
             _attack = data.attack;
+            ManaCost = data.manaCost;
             
             CardAttackText.Initialize(data.attack);
             CardManaText.Initialize(data.manaCost);
@@ -160,8 +165,10 @@ namespace Gameplay.Cards
 
         public bool CanBeSelected()
         {
-            var selectableStatuses = new [] { CardStatus.InHand, CardStatus.InGame };
-            return selectableStatuses.Contains(Status);
+            bool canAttack = Status == CardStatus.InGame && !HasAttacked;
+            bool canBePlayed = Status == CardStatus.InHand && ManaCost <= _owner.Mana;
+
+            return canBePlayed || canAttack;
         }
     }
 

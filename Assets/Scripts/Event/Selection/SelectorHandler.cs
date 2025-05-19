@@ -16,6 +16,7 @@ public class SelectorHandler : MonoBehaviour
         {
             _selectedCard.Unselect();
             StartCoroutine(AttackAnimation.Execute(_selectedCard, card));
+            _selectedCard.HasAttacked = true;
             _selectedCard = null;
         }
         else

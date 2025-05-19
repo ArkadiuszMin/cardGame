@@ -16,44 +16,12 @@ namespace Gameplay
         [SerializeField] private Deck deck;
         [SerializeField] private Board board;
         [SerializeField] private Graveyard graveyard;
-        
+
         public PlayerStatus PlayerStatus { get; private set; }
 
-        public event Action<int, int> ManaChanged;
-        public event Action<int, int, int> XpChanged;
-
-        private int _xp;
-
-        public int Xp
-        {
-            get => _xp;
-            set
-            {
-                _xp = value;
-                XpChanged?.Invoke(GetLevel(_xp), _xp, _xp);
-            }
-        }
-
-        private int _mana;
-        public int Mana
-        {
-            get => _mana;
-            set
-            {
-                _mana = value;
-                ManaChanged?.Invoke(_mana, _maximumMana);
-            }
-        }
-        private int _maximumMana;
-        public int MaximumMana
-        {
-            get => _maximumMana;
-            set
-            {
-                _maximumMana = value;
-                ManaChanged?.Invoke(_mana, _maximumMana);
-            }
-        }
+        public int Xp { get; set; }
+        public int Mana { get; set; }
+        public int MaximumMana { get; set; }
 
         private Card _highlightedCard;
         private Card _selectedCard;
@@ -67,8 +35,8 @@ namespace Gameplay
 
             PlayerStatus = playerStatus;
             Xp = 0;
-            MaximumMana = 1;
-            Mana = _maximumMana;
+            MaximumMana = 10;
+            Mana = MaximumMana;
         }
 
 
@@ -100,7 +68,9 @@ namespace Gameplay
             }
         }
 
-        private void PlayCard(Card card){
+        private void PlayCard(Card card)
+        {
+            Mana -= card.ManaCost;
             hand.RemoveCard(card);
             board.AddCard(card);
             GameEvents.CardEvents.cardPlayed.Invoke(card);
