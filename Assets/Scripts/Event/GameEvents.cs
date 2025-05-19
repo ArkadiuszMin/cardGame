@@ -11,5 +11,10 @@ namespace Event
             public static Action<Card> cardPlayed;
             public static Action<Card> cardDied;
         }
+
+        public static class PlayerEvents
+        {
+            public static Action<PlayerStatus> newTurnStarted;
+        }
     }
 }

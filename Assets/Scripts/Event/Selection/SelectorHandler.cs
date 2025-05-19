@@ -4,20 +4,21 @@ using Event.Selection.Animation;
 using Gameplay.Cards;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class SelectorHandler : MonoBehaviour
 { 
     [CanBeNull] public static SelectorHandler Instance { get; private set; }
-    [CanBeNull] private Card _selectedCard;
+    [CanBeNull] public Card SelectedCard;
 
     private void HandleSelect(Card card)
     {
-        if (AreBothCardsAreOnBoard(card, _selectedCard) && AreDifferentPlayersCard(card, _selectedCard))
+        if (AreBothCardsAreOnBoard(card, SelectedCard) && AreDifferentPlayersCard(card, SelectedCard))
         {
-            _selectedCard.Unselect();
-            StartCoroutine(AttackAnimation.Execute(_selectedCard, card));
-            _selectedCard.HasAttacked = true;
-            _selectedCard = null;
+            SelectedCard.Unselect();
+            StartCoroutine(AttackAnimation.Execute(SelectedCard, card));
+            SelectedCard.HasAttacked = true;
+            SelectedCard = null;
         }
         else
         {
@@ -33,21 +34,21 @@ public class SelectorHandler : MonoBehaviour
             return;
         }
         
-        if (_selectedCard == null)
+        if (SelectedCard == null)
         {
-            _selectedCard = card;
+            SelectedCard = card;
             card.Select();
         }
-        else if (card.Equals(_selectedCard))
+        else if (card.Equals(SelectedCard))
         {
-            _selectedCard.Unselect();
-            _selectedCard = null;
+            SelectedCard.Unselect();
+            SelectedCard = null;
         }
         else
         {
-            _selectedCard.Unselect();
+            SelectedCard.Unselect();
             card.Select();
-            _selectedCard = card;
+            SelectedCard = card;
         }
     }
 
@@ -81,10 +82,10 @@ public class SelectorHandler : MonoBehaviour
 
     private void OnCardPlayed(Card card)
     {
-        if (_selectedCard != null && _selectedCard.Equals(card))
+        if (SelectedCard != null && SelectedCard.Equals(card))
         {
-            _selectedCard.Unselect();
-            _selectedCard = null;
+            SelectedCard.Unselect();
+            SelectedCard = null;
         }
     }
 }

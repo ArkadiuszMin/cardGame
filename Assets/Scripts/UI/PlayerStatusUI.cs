@@ -11,30 +11,39 @@ namespace UI
 {
     public class PlayerStatusUI : MonoBehaviour
     {
-        public Player player;
         public TMP_Text manaText;
         public TMP_Text hpText;
         public Image hpFillImage;
         public Image manaFillImage;
 
-        private void Awake()
+        private int _maxMana;
+        private int _curMana;
+
+        public void RefreshMana(int maxMana)
         {
-            GameEvents.CardEvents.cardPlayed += OnCardPlayed;
+            _maxMana = maxMana;
+            _curMana = _maxMana;
+            
+            RefreshUI();
         }
 
-        public void OnCardPlayed(Card card)
+        public void OnManaUse(int manaUsed)
         {
-            if (card.GetOwnerStatus() != player.PlayerStatus) return;
+            _curMana -= manaUsed;
+            RefreshUI();
+        }
 
-            var curMana = player.Mana;
-            var maxMana = player.MaximumMana;
+        private void RefreshUI()
+        {
+            manaText.text = $"{_curMana}/{_maxMana}";
+            manaFillImage.fillAmount = (float) _curMana / _maxMana;
+        }
 
-            manaText.text = $"{curMana}/{maxMana}";
-            Debug.Log(curMana);
-            Debug.Log(maxMana);
-            Debug.Log(curMana / maxMana);
-            
-            manaFillImage.fillAmount = (float) curMana /  maxMana;
+        public void Initialize(int maximumMana)
+        {
+            _maxMana = maximumMana;
+            _curMana = _maxMana;
+            RefreshUI();
         }
     }
 }

@@ -200,6 +200,7 @@ MonoBehaviour:
   deck: {fileID: 2121854877}
   board: {fileID: 515315465}
   graveyard: {fileID: 1304535009}
+  stats: {fileID: 1149673132}
 --- !u!4 &291942299
 Transform:
   m_ObjectHideFlags: 0
@@ -594,6 +595,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b560268a7cb54039aab02314218e3ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SelectedCard: {fileID: 0}
 --- !u!4 &782549233
 Transform:
   m_ObjectHideFlags: 0
@@ -1022,6 +1024,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 9025779432319162558, guid: 2f222eb9227dcb2499ea28301c95b9e7, type: 3}
   m_PrefabInstance: {fileID: 1149673127}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1149673132 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7543305177394630942, guid: 2f222eb9227dcb2499ea28301c95b9e7, type: 3}
+  m_PrefabInstance: {fileID: 1149673127}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a16a94e89b80549e2b6ed872cca42844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1304535007
 GameObject:
   m_ObjectHideFlags: 0
@@ -1237,6 +1250,7 @@ MonoBehaviour:
   deck: {fileID: 1587315076}
   board: {fileID: 858823511}
   graveyard: {fileID: 355726491}
+  stats: {fileID: 6146990026720615734}
 --- !u!4 &1335052740
 Transform:
   m_ObjectHideFlags: 0
@@ -1876,6 +1890,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 9025779432319162558, guid: 2f222eb9227dcb2499ea28301c95b9e7, type: 3}
   m_PrefabInstance: {fileID: 4525219400250130403}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6146990026720615734 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7543305177394630942, guid: 2f222eb9227dcb2499ea28301c95b9e7, type: 3}
+  m_PrefabInstance: {fileID: 4525219400250130403}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a16a94e89b80549e2b6ed872cca42844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8282003897495455546
 PrefabInstance:
   m_ObjectHideFlags: 0

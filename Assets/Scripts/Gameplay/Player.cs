@@ -3,6 +3,8 @@ using Data;
 using DG.Tweening;
 using Event;
 using Gameplay.Cards;
+using UI;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Gameplay
@@ -16,6 +18,7 @@ namespace Gameplay
         [SerializeField] private Deck deck;
         [SerializeField] private Board board;
         [SerializeField] private Graveyard graveyard;
+        [SerializeField] private PlayerStatusUI stats;
 
         public PlayerStatus PlayerStatus { get; private set; }
 
@@ -28,15 +31,16 @@ namespace Gameplay
 
         public void Initialize(PlayerStatus playerStatus)
         {
-            deck.Initialize(this, startingDeckData);
-            hand.Initialize(this);
-            board.Initialize(this);
-            graveyard.Initialize(this);
-
             PlayerStatus = playerStatus;
             Xp = 0;
             MaximumMana = 10;
             Mana = MaximumMana;
+            
+            deck.Initialize(this, startingDeckData);
+            hand.Initialize(this);
+            board.Initialize(this);
+            graveyard.Initialize(this);
+            stats.Initialize(MaximumMana);
         }
 
 
@@ -73,22 +77,8 @@ namespace Gameplay
             Mana -= card.ManaCost;
             hand.RemoveCard(card);
             board.AddCard(card);
+            stats.OnManaUse(card.ManaCost);
             GameEvents.CardEvents.cardPlayed.Invoke(card);
-        }
-
-        public int GetLevel(int xp)
-        {
-            var levels = new[] { 0, 3, 4, 5, 6 };
-            for (int i = 0; i < levels.Length; i++)
-            {
-                xp -= levels[i];
-                if (xp < 0)
-                {
-                    return i - 1;
-                }
-            }
-
-            return 0;
         }
 
         public void Highlight(Card card)
@@ -120,6 +110,21 @@ namespace Gameplay
             board.RemoveCard(card);
             graveyard.AddCard(card);
             GameEvents.CardEvents.cardDied.Invoke(card);
+        }
+
+        private void RefreshMana()
+        {
+            MaximumMana = math.min(MaximumMana + 1, 10);
+            Mana = MaximumMana;
+            stats.RefreshMana(MaximumMana);
+        }
+
+        private void OnTurnStarted(PlayerStatus playerTurn)
+        {
+            if (playerTurn != PlayerStatus) return;
+            RefreshMana();
+            board.RefreshCreatures();
+
         }
     }
 }

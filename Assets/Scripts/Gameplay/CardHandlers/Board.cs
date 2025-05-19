@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Event;
 using Gameplay.Cards;
@@ -58,6 +59,14 @@ namespace Gameplay
         public void OnPointerClick(PointerEventData eventData)
         {
             _owner.PlaySelectedCard();
+        }
+
+        public void RefreshCreatures()
+        {
+            foreach (var card in _cards)
+            {
+                card.HasAttacked = false;
+            }
         }
     }
 }
