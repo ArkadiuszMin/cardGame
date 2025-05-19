@@ -65,7 +65,7 @@ namespace Gameplay
         {
             foreach (var card in _cards)
             {
-                card.HasAttacked = false;
+                card.CanAttack = true;
             }
         }
     }

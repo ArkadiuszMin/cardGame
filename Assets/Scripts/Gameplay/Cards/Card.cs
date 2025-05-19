@@ -9,6 +9,7 @@ using Interface;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Gameplay.Cards
@@ -34,8 +35,8 @@ namespace Gameplay.Cards
         private int _health;
         public int _attack;
         public int ManaCost;
-
-        public bool HasAttacked = false;
+        
+        public bool CanAttack = false;
         
         private void Awake()
         {
@@ -165,7 +166,7 @@ namespace Gameplay.Cards
 
         public bool CanBeSelected()
         {
-            bool canAttack = Status == CardStatus.InGame && !HasAttacked;
+            bool canAttack = Status == CardStatus.InGame && CanAttack;
             bool canBePlayed = Status == CardStatus.InHand && ManaCost <= _owner.Mana;
 
             return canBePlayed || canAttack;
