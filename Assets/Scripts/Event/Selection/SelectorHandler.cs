@@ -29,6 +29,14 @@ public class SelectorHandler : MonoBehaviour
 
     private void HandleCardSelection(Card card)
     {
+        var curTurn = GameContext.Instance.PlayersTurn;
+        var cardsPlayer = card.GetOwnerStatus();
+
+        if (curTurn != cardsPlayer)
+        {
+            return;
+        }
+        
         if (!card.CanBeSelected())
         {
             return;
@@ -78,6 +86,12 @@ public class SelectorHandler : MonoBehaviour
     {
         GameEvents.CardEvents.cardClicked += HandleSelect;
         GameEvents.CardEvents.cardPlayed += OnCardPlayed;
+        GameEvents.PlayerEvents.newTurnStarted += OnNewTurn;
+    }
+
+    private void OnNewTurn(PlayerStatus status)
+    {
+        SelectedCard = null;
     }
 
     private void OnCardPlayed(Card card)

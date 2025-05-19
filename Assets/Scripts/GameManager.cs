@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using Gameplay;
 public class GameManager : MonoBehaviour
@@ -15,15 +16,29 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        InitializePlayers();
-        InitializeBoard();
+        StartCoroutine(InitializeGame());
     }
     private void InitializePlayers(){
         player.Initialize(PlayerStatus.Me);
         opponent.Initialize(PlayerStatus.Opponent);
+        
     }
     private void InitializeBoard(){
         board.Initilize();
+    }
+
+    private IEnumerator InitializeGame()
+    {
+        InitializePlayers();
+        InitializeBoard();
+        yield return new WaitForSeconds(0.5f);
+        
+        for (int i = 0; i < 3; i++)
+        {
+            player.DrawCard();
+            opponent.DrawCard();
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 }
 

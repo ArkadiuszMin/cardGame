@@ -33,8 +33,9 @@ namespace Gameplay
         {
             PlayerStatus = playerStatus;
             Xp = 0;
-            MaximumMana = 10;
+            MaximumMana = 1;
             Mana = MaximumMana;
+            GameEvents.PlayerEvents.newTurnStarted += OnTurnStarted;
             
             deck.Initialize(this, startingDeckData);
             hand.Initialize(this);
@@ -46,11 +47,6 @@ namespace Gameplay
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                DrawCard();
-            }
-
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 Select(null);
@@ -122,9 +118,9 @@ namespace Gameplay
         private void OnTurnStarted(PlayerStatus playerTurn)
         {
             if (playerTurn != PlayerStatus) return;
+            DrawCard();
             RefreshMana();
             board.RefreshCreatures();
-
         }
     }
 }
