@@ -1,4 +1,5 @@
 using System.Collections;
+using Event;
 using UnityEngine;
 using Gameplay;
 public class GameManager : MonoBehaviour
@@ -21,7 +22,6 @@ public class GameManager : MonoBehaviour
     private void InitializePlayers(){
         player.Initialize(PlayerStatus.Me);
         opponent.Initialize(PlayerStatus.Opponent);
-        
     }
     private void InitializeBoard(){
         board.Initilize();
@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     {
         InitializePlayers();
         InitializeBoard();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.4f);
         
         for (int i = 0; i < 3; i++)
         {
@@ -39,6 +39,9 @@ public class GameManager : MonoBehaviour
             opponent.DrawCard();
             yield return new WaitForSeconds(0.2f);
         }
+
+        yield return new WaitForSeconds(0.2f);
+        GameEvents.PlayerEvents.newTurnStarted.Invoke(PlayerStatus.Me);
     }
 }
 

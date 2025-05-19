@@ -33,7 +33,7 @@ namespace Gameplay
         {
             PlayerStatus = playerStatus;
             Xp = 0;
-            MaximumMana = 1;
+            MaximumMana = 0;
             Mana = MaximumMana;
             GameEvents.PlayerEvents.newTurnStarted += OnTurnStarted;
             
@@ -117,7 +117,12 @@ namespace Gameplay
 
         private void OnTurnStarted(PlayerStatus playerTurn)
         {
-            if (playerTurn != PlayerStatus) return;
+            if (playerTurn != PlayerStatus)
+            {
+                Select(null);
+                return;
+            };
+            
             DrawCard();
             RefreshMana();
             board.RefreshCreatures();
