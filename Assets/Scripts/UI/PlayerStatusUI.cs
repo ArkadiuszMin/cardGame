@@ -18,7 +18,6 @@ namespace UI
         public Image hpFillImage;
         public Image manaFillImage;
         public PlayerStatus playerStatus;
-        public GameManager gameManager;
         private List<Action> ActionQueue;
 
         private int _maxMana;
@@ -42,7 +41,7 @@ namespace UI
             if (_curHp <= 0)
             {
                 _curHp = 0;
-                ActionQueue.Add(() => gameManager.EndGame(playerStatus));
+                ActionQueue.Add(() => GameManager.Instance.EndGame(playerStatus));
             }
 
             RefreshUI();

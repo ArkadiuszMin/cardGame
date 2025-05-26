@@ -10,15 +10,17 @@ public class GameManager : MonoBehaviour
     public Player opponent;
     public GameBoard board;
     public Canvas gameOverScreen;
+    public Canvas gameStartScreen;
 
     private void Awake()
     {
         Instance = this;
     }
 
-    private void Start()
+    public void StartGame()
     {
         StartCoroutine(InitializeGame());
+        gameStartScreen.gameObject.SetActive(false);
     }
     private void InitializePlayers()
     {
@@ -32,7 +34,6 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator InitializeGame()
     {
-        gameOverScreen.gameObject.SetActive(false);
         InitializePlayers();
         InitializeBoard();
         yield return new WaitForSeconds(0.4f);
