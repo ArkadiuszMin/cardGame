@@ -22,7 +22,7 @@ namespace Gameplay
 
             Shuffle();
         }
-        
+
         private void CreateCard(CardData cardData)
         {
             var card = cardData.Create();
@@ -48,7 +48,7 @@ namespace Gameplay
 
         public Card DrawCard()
         {
-            if (_cards.Count >0)
+            if (_cards.Count > 0)
             {
                 var card = _cards[0];
                 _cards.RemoveAt(0);
@@ -56,6 +56,14 @@ namespace Gameplay
             }
 
             return null;
+        }
+        
+        public void disableCards()
+        {
+            foreach (var card in _cards)
+            {
+                card.enabled = false;
+            }
         }
     }
 }

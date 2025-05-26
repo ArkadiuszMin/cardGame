@@ -39,8 +39,8 @@ namespace Gameplay
 
             var handSize = count * cardSize + (count - 1) * cardInterval;
             var positionX = (cardSize - handSize) / 2f;
-            
-            return new Vector3(positionX + (cardSize + cardInterval)*index, 0f, 0f);
+
+            return new Vector3(positionX + (cardSize + cardInterval) * index, 0f, 0f);
         }
 
         public Transform GetTransform()
@@ -52,6 +52,14 @@ namespace Gameplay
         {
             _cards.Remove(card);
             UpdateHandPosition();
+        }
+        
+        public void disableCards()
+        {
+            foreach (var card in _cards)
+            {
+                card.enabled = false;
+            }
         }
     }
 }

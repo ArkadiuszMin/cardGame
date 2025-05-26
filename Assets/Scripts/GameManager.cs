@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public Player player;
     public Player opponent;
     public GameBoard board;
+    public Canvas gameOverScreen;
 
     private void Awake()
     {
@@ -19,20 +20,23 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(InitializeGame());
     }
-    private void InitializePlayers(){
+    private void InitializePlayers()
+    {
         player.Initialize(PlayerStatus.Me);
         opponent.Initialize(PlayerStatus.Opponent);
     }
-    private void InitializeBoard(){
+    private void InitializeBoard()
+    {
         board.Initilize();
     }
 
     private IEnumerator InitializeGame()
     {
+        gameOverScreen.gameObject.SetActive(false);
         InitializePlayers();
         InitializeBoard();
         yield return new WaitForSeconds(0.4f);
-        
+
         for (int i = 0; i < 3; i++)
         {
             player.DrawCard();
@@ -42,6 +46,16 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f);
         GameEvents.PlayerEvents.newTurnStarted.Invoke(PlayerStatus.Me);
+    }
+
+    public void EndGame(PlayerStatus winner)
+    {
+        gameOverScreen.gameObject.SetActive(true);
+        player.endGame();
+        opponent.endGame();
+        player.enabled = false;
+        opponent.enabled = false;
+        board.enabled = false;
     }
 }
 

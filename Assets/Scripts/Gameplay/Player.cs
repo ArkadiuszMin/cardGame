@@ -13,7 +13,7 @@ namespace Gameplay
     public class Player : MonoBehaviour
     {
         public StartingDeckData startingDeckData;
-        
+
         [SerializeField] private Hand hand;
         [SerializeField] private Deck deck;
         [SerializeField] private Board board;
@@ -36,12 +36,12 @@ namespace Gameplay
             MaximumMana = 0;
             Mana = MaximumMana;
             GameEvents.PlayerEvents.newTurnStarted += OnTurnStarted;
-            
+
             deck.Initialize(this, startingDeckData);
             hand.Initialize(this);
             board.Initialize(this);
             graveyard.Initialize(this);
-            stats.Initialize(MaximumMana);
+            stats.Initialize(MaximumMana, playerStatus);
         }
 
 
@@ -60,8 +60,10 @@ namespace Gameplay
                 hand.AddCard(card);
         }
 
-        public void PlaySelectedCard(){
-            if (_selectedCard && _selectedCard.isInHand()){
+        public void PlaySelectedCard()
+        {
+            if (_selectedCard && _selectedCard.isInHand())
+            {
                 Unhighlight();
                 PlayCard(_selectedCard);
                 Select(null);
@@ -79,10 +81,10 @@ namespace Gameplay
 
         public void Highlight(Card card)
         {
-            if(_highlightedCard)
+            if (_highlightedCard)
                 _highlightedCard.Unhighlight();
             _highlightedCard = card;
-            if(_highlightedCard)
+            if (_highlightedCard)
                 _highlightedCard.Highlight();
         }
         public void Unhighlight()
@@ -92,7 +94,7 @@ namespace Gameplay
 
         public void Select(Card card)
         {
-            if(_selectedCard)
+            if (_selectedCard)
                 _selectedCard.Unselect();
             _selectedCard = card;
         }
@@ -121,11 +123,17 @@ namespace Gameplay
             {
                 Select(null);
                 return;
-            };
-            
+            }
+
             DrawCard();
             RefreshMana();
             board.RefreshCreatures();
+        }
+
+        public void endGame()
+        {
+            hand.disableCards();
+            deck.disableCards();
         }
     }
 }

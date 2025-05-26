@@ -3,6 +3,7 @@ using Event;
 using Event.Selection.Animation;
 using Gameplay.Cards;
 using JetBrains.Annotations;
+using UI;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -82,11 +83,23 @@ public class SelectorHandler : MonoBehaviour
         }
     }
 
+    private void HandlePlayerSelect(PlayerStatusUI playerStatusUI)
+    {
+        if( SelectedCard != null && SelectedCard.GetOwnerStatus() != playerStatusUI.playerStatus)
+        {
+            SelectedCard.Unselect();
+            StartCoroutine(AttackAnimation.Execute(SelectedCard, playerStatusUI));
+            SelectedCard.CanAttack = false;
+            SelectedCard = null;
+        }
+    }
+
     private void Start()
     {
         GameEvents.CardEvents.cardClicked += HandleSelect;
         GameEvents.CardEvents.cardPlayed += OnCardPlayed;
         GameEvents.PlayerEvents.newTurnStarted += OnNewTurn;
+        GameEvents.PlayerEvents.playerClicked += HandlePlayerSelect;
     }
 
     private void OnNewTurn(PlayerStatus status)

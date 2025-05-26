@@ -1,5 +1,6 @@
 ﻿using System;
 using Gameplay.Cards;
+using UI;
 
 namespace Event
 {
@@ -15,6 +16,7 @@ namespace Event
         public static class PlayerEvents
         {
             public static Action<PlayerStatus> newTurnStarted;
+            public static Action<PlayerStatusUI> playerClicked;
         }
     }
 }
