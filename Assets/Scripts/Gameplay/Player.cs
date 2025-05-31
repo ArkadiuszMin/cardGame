@@ -122,9 +122,11 @@ namespace Gameplay
             if (playerTurn != PlayerStatus)
             {
                 Select(null);
+                stats.playerName.color = Color.white;
                 return;
             }
 
+            stats.playerName.color = Color.yellow;
             DrawCard();
             RefreshMana();
             board.RefreshCreatures();

@@ -47,6 +47,9 @@ TagManager:
   - name: Cards
     uniqueID: 3913995239
     locked: 0
+  - name: Players
+    uniqueID: 4272907675
+    locked: 0
   m_RenderingLayers:
   - Default
   - Light Layer 1

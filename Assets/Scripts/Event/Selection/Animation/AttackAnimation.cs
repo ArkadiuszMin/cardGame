@@ -40,7 +40,7 @@ namespace Event.Selection.Animation
 
             yield return new WaitForSeconds(0.1f);
 
-            target.onDamage(attacker._attack);
+            target.OnDamage(attacker._attack);
 
             yield return AnimationHelper.MoveToPosition(attacker.transform, originalPosition, duration / 2);
 

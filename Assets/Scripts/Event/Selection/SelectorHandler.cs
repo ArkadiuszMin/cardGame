@@ -85,7 +85,7 @@ public class SelectorHandler : MonoBehaviour
 
     private void HandlePlayerSelect(PlayerStatusUI playerStatusUI)
     {
-        if( SelectedCard != null && SelectedCard.GetOwnerStatus() != playerStatusUI.playerStatus)
+        if (SelectedCard != null && SelectedCard.GetOwnerStatus() != playerStatusUI.getPlayerStatus())
         {
             SelectedCard.Unselect();
             StartCoroutine(AttackAnimation.Execute(SelectedCard, playerStatusUI));

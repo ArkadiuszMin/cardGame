@@ -13,11 +13,12 @@ namespace UI
 {
     public class PlayerStatusUI : MonoBehaviour, IPointerClickHandler
     {
+        public TMP_Text playerName;
         public TMP_Text manaText;
         public TMP_Text hpText;
         public Image hpFillImage;
         public Image manaFillImage;
-        public PlayerStatus playerStatus;
+        private PlayerStatus _playerStatus;
         private List<Action> ActionQueue;
 
         private int _maxMana;
@@ -34,14 +35,14 @@ namespace UI
             RefreshUI();
         }
 
-        public void onDamage(int demage)
+        public void OnDamage(int demage)
         {
             _curHp -= demage;
 
             if (_curHp <= 0)
             {
                 _curHp = 0;
-                ActionQueue.Add(() => GameManager.Instance.EndGame(playerStatus));
+                ActionQueue.Add(() => GameManager.Instance.EndGame(_playerStatus));
             }
 
             RefreshUI();
@@ -56,20 +57,26 @@ namespace UI
         private void RefreshUI()
         {
             manaText.text = $"{_curMana}/{_maxMana}";
-            manaFillImage.fillAmount = (float)_curMana / _maxMana;
+            if (_maxMana == 0)
+                manaFillImage.fillAmount = 0;
+            else
+                manaFillImage.fillAmount = (float)_curMana / _maxMana;
 
             hpText.text = $"{_curHp}/{_maxHp}";
-            hpFillImage.fillAmount = (float)_curHp / _maxHp;
+            if (_maxHp == 0)
+                hpFillImage.fillAmount = 0;
+            else
+                hpFillImage.fillAmount = (float)_curHp / _maxHp;
         }
 
-        public void Initialize(int maximumMana, PlayerStatus playerStatu)
+        public void Initialize(int maximumMana, PlayerStatus playerStatus)
         {
             _maxMana = maximumMana;
             _curMana = _maxMana;
             _maxHp = 20;
             _curHp = 20;
-            playerStatus = playerStatu;
             ActionQueue = new List<Action>();
+            _playerStatus = playerStatus;
             RefreshUI();
         }
 
@@ -77,15 +84,21 @@ namespace UI
         {
             GameEvents.PlayerEvents.playerClicked?.Invoke(this);
         }
-        
+
         public void ExecuteActions()
         {
             foreach (var action in ActionQueue)
             {
                 action.Invoke();
             }
-            
+
             ActionQueue.Clear();
         }
+
+        public PlayerStatus getPlayerStatus()
+        {
+            return _playerStatus;
+        }
+
     }
 }
